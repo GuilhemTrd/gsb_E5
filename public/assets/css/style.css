@@ -1,0 +1,283 @@
+/*GENERAL*/
+:root{
+    --main-bg: #3B6196;
+    --second-bg: #F9A826;
+    --white : #FFF;
+}
+
+body{
+    background-color: var(--main-bg);
+    letter-spacing: 1px;
+}
+h1{
+    color: var(--white);
+    text-align: center;
+    margin-bottom: 50px;
+}
+h2{
+    color: var(--white);
+    text-align: center;
+}
+a{
+    text-decoration: none!important;
+}
+/*BUTTON*/
+.btn {
+    text-align: center;
+    padding: 10px 15px;
+    border: 1px solid var(--second-bg);
+    cursor: pointer;
+    position:relative;
+    overflow:hidden;
+    margin: 0 20px;
+    letter-spacing: 2px;
+}
+
+.btn:before {
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 100%;
+    background : var(--second-bg);
+    left: 0;
+    bottom: 0;
+    transition: all .3s;
+    opacity: 0.3;
+}
+
+.btn:hover:before {
+    height: 100%;
+}
+
+.buttonLink{
+    flex: 1;
+    padding: 5px 10px;
+    margin-left: 20px;
+    width: 330px;
+    height: 40px;
+    text-align: center;
+    color: black;
+    position: relative;
+    transition:all 0.5s;
+    text-decoration: none;
+    background-color: white;
+    z-index: 0;
+    border-radius: 10px;
+}
+.buttonLink:before{
+    content:" ";
+    display:block;
+    position:absolute;
+    border-bottom:solid 3px var(--second-bg);
+    bottom:0px;
+    width:0%;
+    left:50%;
+    transition:all 0.5s;
+    z-index:-1;
+}
+
+.buttonLink:hover::before{
+    border-bottom:solid 4px var(--second-bg);
+    width:100%;
+    left:0%;
+}
+.buttonLink:hover{
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    color: black;
+}
+/*ACCUEIL*/
+.accueil{
+    margin-top: 100px;
+}
+.divImgAcc
+{
+    text-align: center;
+}
+.imgAcc{
+    margin-top: 20px;
+    width: 600px;
+}
+
+/*FORMULAIRE*/
+.cardForm{
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+.cardFormInput{
+    height: 260px;
+}
+.cardForm input{
+    border: 0px;
+    border-bottom: 2px solid #fac47b;
+    background-color: #fde7c5;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 5px 10px;
+}
+
+.cardForm select{
+    background-color: #fde7c5;
+    width: 200px;
+}
+
+.cardForm select:focus>option:checked {
+    background: #fab047;
+}
+
+.cardForm input:focus{
+    outline-offset: 0px;
+    outline: none;
+}
+/*TABLEAU*/
+.table{
+    margin: 0 auto;
+}
+.table tr,.table th,.table td{
+    text-align: center;
+    height: 1em; /* hauteur du parent */
+    line-height: 1em; /* hauteur de ligne (identique) */
+    width: 150px;
+    white-space: nowrap; /* interdiction de passer à la ligne */
+}
+.my-custom-scrollbar {
+    position: relative;
+    max-height: 500px;
+    overflow: auto;
+}
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.table td i{
+    color: black;
+}
+.table td i:hover{
+    color: var(--second-bg);
+}
+.table thead{
+    background-color: var(--second-bg);
+}
+/*Barre de recherche*/
+.input_container{
+    display: inline-block;
+    text-align: center;
+}
+.awsome_input{
+    padding: 8px 10px;
+    border: none;
+    background: white;
+    display: block;
+    width: 900px;
+    border-radius: 10px;
+}
+
+.awsome_input:hover,
+.awsome_input:active,
+.awsome_input:focus{
+    outline: none;
+}
+.awsome_input:hover+.awsome_input_border,
+.awsome_input:active+.awsome_input_border,
+.awsome_input:focus+.awsome_input_border{
+    width:100%;
+}
+/*SCROLLBAR*/
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--second-bg);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #dc8c15;
+}
+/*Liste des activités*/
+.actTable{
+    width: 700px;
+}
+/*Liste des praticiens*/
+.listePrat{
+    margin-left: -70px;
+}
+.listePrat .pratTable{
+    width: 1250px;
+}
+.listePrat .left_right{
+    display: flex;
+}
+.listePrat .left{
+    flex: 1;
+}
+.listePrat .right{
+    flex: 1;
+}
+.listePrat  .tableHeader th{
+    min-width: 230px;
+}
+.listePrat  .tableHeader .iAwesom{
+    min-width: 50px;
+}
+/*LOGIN*/
+.formLogin{
+    width: 700px;
+    height: 250px;
+    font-size: 20px;
+}
+
+/*FORM PRAT GENE */
+.formPratLeft{
+    margin-right: 30px;
+}
+.formPratRight{
+    margin-left: 30px;
+}
+
+/*FORM AJOUT PRAT*/
+.formAjoutPratGene{
+    display: inline-flex;
+}
+.formAjoutPrat{
+    width: 500px;
+    height: 250px;
+}
+.formBtn{
+    width: 1060px;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+/*FORM MODIF PRAT*/
+.formModifPratGene{
+    display: inline-flex;
+}
+.formModifPrat{
+    width: 500px;
+    height: 250px;
+}
+
+.formModifPratGene .grid-container{
+    display: grid;
+    grid: auto auto auto;
+}
+.grid-container > div {
+    height: 70px;
+}
+
+/*ACTIVITES*/
+.infosActs{
+    text-align: center;
+}
