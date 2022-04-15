@@ -3,18 +3,14 @@
     <div>
         <br><br>
         <br><br>
-
         @php
             $nom = strtoupper($unPrat[0]->nom_praticien);
         @endphp
-
         <div class="infosActs">
             <div>
                 <h1>Gestion des activités de {{$nom}} {{$unPrat[0]->prenom_praticien}}</h1>
             </div>
-
                 <a class="buttonLink" type="button" href="{{url('/ajoutAct')}}/{{ $unPrat[0]->id_praticien }}"> Inviter à une activité </a>
-
             <table id='myTable'
                    class="table table-bordered table-striped table-hover table-light my-custom-scrollbar table-wrapper-scroll-y actTable">
                 <thead>

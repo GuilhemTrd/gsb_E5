@@ -1,4 +1,3 @@
-{{--@if($_SESSION['token'])--}}
 @extends('layouts.master')
 @section('content')
 
@@ -7,41 +6,32 @@
     <div>
         <div class="formAjoutPratGene">
             <div class="cardForm formAjoutPrat formPratLeft">
-                <div class="nom">
-                    <label> Nom :</label>
-                    <input type="text" name="nom" required>
-                </div>
                 <input type="hidden" name="count" required value="{{$count}}">
-                <br>
-                <div class="prenom">
-                    <label> Prénom :</label>
-                    <input type="text" name="prenom" required>
+                <div class="nom donnee">
+                    <input size="30" type="text" name="nom" placeholder="Nom" required>
                 </div>
-                <div class="adresse">
-                    <label> Adresse :</label>
-                    <input type="text" name="adresse" required>
+                <div class="prenom donnee">
+                    <input size="30" type="text" name="prenom" placeholder="Prenom" required>
                 </div>
-                <div class="cp">
-                    <label> Code Postal :</label>
-                    <input type="text" name="cp" required>
+                <div class="adresse donnee">
+                    <input size="30" type="text" name="adresse" placeholder="Adresse" required>
                 </div>
-                <div class="ville">
-                    <label> Ville :</label>
-                    <input type="text" name="ville" required>
+                <div class="cp donnee">
+                    <input size="30" type="text" name="cp" placeholder="Code Postal" required>
+                </div>
+                <div class="ville donnee">
+                    <input size="30" type="text" name="ville" placeholder="Ville" required>
                 </div>
             </div>
         </div>
         <div class="cardForm formAjoutPrat formPratRight">
-            <div class="coef">
-                <label> Coefficient Notoriété :</label>
-                <input type="text" name="coef" required>
+            <div class="coef donnee">
+                <input size="30" type="text" name="coef" placeholder="Coefficient" required>
             </div>
-            <div class="diplome">
-                <label> Diplôme :</label>
-                <input type="text" name="diplome" required>
+            <div class="diplome donnee">
+                <input size="30" type="text" name="diplome" placeholder="Diplôme" required>
             </div>
-            <div class="typePrat">
-                <label> Type de praticien:</label>
+            <div class="typePrat donnee">
                 <select name="typePrat" required>
                     <option value="0">Sélectionner un type</option>
                     @foreach($mesTypes as $unType)
@@ -49,8 +39,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="spe">
-                <label> Type de praticien:</label>
+            <div class="spe donnee">
                 <select name="spe" required>
                     <option value="0">Sélectionner une spécialité</option>
                     @foreach($mesSpe as $uneSpe)

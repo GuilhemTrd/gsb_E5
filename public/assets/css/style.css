@@ -246,8 +246,15 @@ a{
     height: 250px;
 }
 
-.formAjoutPrat input{
-    margin-top: 10px;
+.formAjoutPrat .donnee{
+    margin-top: 12px;
+}
+.formAjoutPrat select{
+    width: 275px;
+}
+
+.formAjoutPrat .nom{
+    margin-top: -5px;
 }
 
 .formBtn{
