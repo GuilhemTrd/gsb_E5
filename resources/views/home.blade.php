@@ -5,7 +5,7 @@
             <h1> Gestion des praticiens </h1>
         </div>
         <div class="divImgAcc">
-     qsdf
+            <img class="imgAcc" src="{{url(asset('images/imgAccueil.png'))}}">
         </div>
     </div>
 @stop
