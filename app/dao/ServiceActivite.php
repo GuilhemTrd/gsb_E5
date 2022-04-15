@@ -66,4 +66,22 @@ class ServiceActivite
             throw new \Exception($e->getMessage(), 5);
         }
     }
+
+    public function modifAct($oldIdAct,$oldIdPrat,$idAct,$idPrat,$spe)
+    {
+        try {
+            DB::table('inviter')
+                ->where('id_praticien', '=', $oldIdPrat)
+                ->where('id_activite_compl', '=', $oldIdAct)
+                ->update([
+                    'id_activite_compl' => $idAct , 'specialiste' =>$spe
+                ]);
+            $response = array(
+                'status_message' => 'Modification réalisée'
+            );
+            return $response;
+        } catch (QueryException $e) {
+            throw new \Exception($e->getMessage(), 5);
+        }
+    }
 }

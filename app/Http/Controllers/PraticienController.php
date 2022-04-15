@@ -61,10 +61,8 @@ class PraticienController
     public function listePraticiens(){
         try{
             $unPrat = new ServicePraticien();
-            $mesPratsPoss = $unPrat->getAllPraticiensWPosseder();
-            $unPrat = new ServicePraticien();
-            $mesPrats = $unPrat->getAllPraticiensNotIN();
-            return view('vues/listePraticiens',compact('mesPrats','mesPratsPoss'));
+            $allInfos = $unPrat->getAllInfosPrat();
+            return view('vues/listePraticiens',compact('allInfos'));
         } catch (MonException $e){
             $monErreur = $e->getMessage();
             return view('vues/pageErreur', compact('monErreur'));
@@ -101,15 +99,9 @@ class PraticienController
             $typePrat = Request::input('typePrat');
             $idSpe = Request::input('spe');
             $diplome = Request::input('diplome');
-            $idPratBefore = Request::input('count');
-            $idPratAfter = $idPratBefore + 1;
             $unAjoutPratOne = new ServicePraticien();
-            $unAjoutPratOne->ajoutPrat($idPratAfter,$nom,$prenom,$adresse,$cp,$ville,$coef,$typePrat,$idSpe,$diplome);
-            $unPrat = new ServicePraticien();
-            $mesPratsPoss = $unPrat->getAllPraticiensWPosseder();
-            $unPrat = new ServicePraticien();
-            $mesPrats = $unPrat->getAllPraticiensNotIN();
-            return view('vues/listePraticiens',compact('mesPrats','mesPratsPoss'));
+            $unAjoutPratOne->ajoutPrat($nom,$prenom,$adresse,$cp,$ville,$coef,$typePrat,$idSpe,$diplome);
+            return redirect('/listePraticiens');
         } catch (MonException $e){
             $monErreur = $e->getMessage();
             return view('vues/pageErreur',compact('monErreur'));
@@ -127,13 +119,19 @@ class PraticienController
             $typePrat = Request::input('typePrat');
             $idSpe = Request::input('spe');
             $idPrat = Request::input('id');
-            $unAjoutPratOne = new ServicePraticien();
-            $unAjoutPratOne->modifPrat($idPrat,$adresse,$cp,$ville,$coef,$typePrat,$idSpe);
-            $unPrat = new ServicePraticien();
-            $mesPratsPoss = $unPrat->getAllPraticiensWPosseder();
-            $unPrat = new ServicePraticien();
-            $mesPrats = $unPrat->getAllPraticiensNotIN();
-            return view('vues/listePraticiens',compact('mesPrats','mesPratsPoss'));
+
+            $uneModifPrat = new ServicePraticien();
+            $uneModifPrat->modifPrat($idPrat,$adresse,$cp,$ville,$coef,$typePrat,$idSpe);
+            if ($idSpe != null){
+                $modif = $uneModifPrat->getAllInfosPratID($idPrat);
+                if ($modif[0]->lib_specialite == null){
+                    $uneModifPrat->insertPossPrat($idPrat,$idSpe);
+                }
+                if ($modif[0]->lib_specialite != null){
+                    $uneModifPrat->modifPossPrat($idPrat,$idSpe);
+                }
+            }
+            return redirect('/listePraticiens');
         } catch (MonException $e){
             $monErreur = $e->getMessage();
             return view('vues/pageErreur',compact('monErreur'));
@@ -143,15 +141,30 @@ class PraticienController
         }
     }
 
-    public function supprPrat($id){
+    public function supprPrat($idPrat){
         try{
             $uneSuppr = new ServicePraticien();
-            $supprimer = $uneSuppr->supprPrat($id);
-            $unPrat = new ServicePraticien();
-            $mesPrats = $unPrat->getAllPraticiens();
-            $unPrat = new ServicePraticien();
-            $mesPratsPoss = $unPrat->getAllPraticiensWPosseder();
-            return view('vues/listePraticiens',compact('supprimer','mesPrats','mesPratsPoss'));
+            $allInfos = $uneSuppr->getAllInfosPratID($idPrat);
+            foreach ($allInfos as $unPrat){
+                $uneSpe = $unPrat->lib_specialite;
+                $uneAct = $unPrat->id_activite_compl;
+                $uneStat = $unPrat->id_medicament;
+                break;
+            }
+            if($uneSpe != null)
+            {
+                $supprimer = $uneSuppr->supprSpe($idPrat);
+            }
+            if($uneAct != null)
+            {
+                $supprimer = $uneSuppr->supprAct($idPrat);
+            }
+            if($uneStat != null)
+            {
+                $supprimer = $uneSuppr->supprStat($idPrat);
+            }
+            $supprimer = $uneSuppr->supprPrat($idPrat);
+            return redirect('/listePraticiens');
         } catch (MonException $e){
             $monErreur = $e->getMessage();
             return view('vues/pageErreur', compact('monErreur'));
@@ -160,16 +173,15 @@ class PraticienController
             return view('vues/pageErreur', compact('monErreur'));
         }
     }
+
     public function pratParID($id){
         try{
             $unPrat = new ServicePraticien();
-            $prat = $unPrat->getPratByID($id);
-            $id = new ServicePraticien();
-            $count = $id->countPratID();
-            $unType = new ServicePraticien();
-            $mesTypes = $unType->getAllTypes();
-            $mesSpe = $unType->getAllSpe();
-            return view('vues/formModifPrat',compact('prat','count','mesTypes','mesSpe'));
+            $prat = $unPrat->getAllInfosPratId($id);
+//            $count = $unPrat->countPratID();
+            $mesTypes = $unPrat->getAllTypes();
+            $mesSpe = $unPrat->getAllSpe();
+            return view('vues/formModifPrat',compact('prat','mesTypes','mesSpe'));
         } catch (MonException $e){
             $monErreur = $e->getMessage();
             return view('vues/pageErreur', compact('monErreur'));

@@ -41,6 +41,5 @@
 {!! Html::script('assets/js/ui-bootstrap-tpls.js')  !!}
 {!! Html::script('assets/js/bootstrap.js')  !!}
 {!! Html::script('assets/js/ajaxConnexion.js')  !!}
-
 </body>
 </html>

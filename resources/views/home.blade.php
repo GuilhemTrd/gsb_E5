@@ -2,11 +2,10 @@
 @section('content')
     <div class="accueil">
         <div class="titreAcc">
-            <h1> GSB </h1>
-            <h2> Gestion des praticiens </h2>
+            <h1> Gestion des praticiens </h1>
         </div>
         <div class="divImgAcc">
-            <img class="imgAcc" src="{{url(asset('images/imgAccueil.png'))}}">
+     qsdf
         </div>
     </div>
 @stop

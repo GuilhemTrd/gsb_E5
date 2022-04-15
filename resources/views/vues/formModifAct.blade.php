@@ -1,20 +1,27 @@
 @extends('layouts.master')
-
 @section('content')
     @php
         $nom = strtoupper($unPrat[0]->nom_praticien)
     @endphp
+
     <br>
     <br>
     <br>
     <h1>Ajouter une activité a {{$nom}} {{$unPrat[0]->prenom_praticien}}</h1>
-    {!! Form::open(['url' => 'ajoutFin']) !!}
+    {!! Form::open(['url' => 'modifFin']) !!}
     <div class="cardForm formAjoutAct">
             <div class="act">
                 <input type="hidden" name="idPrat" required value="{{$unPrat[0]->id_praticien}}">
+                <input type="hidden" name="oldIdPrat" required value="{{$idAct}}">
+                <input type="hidden" name="oldIdAct" required value="{{$idPrat}}">
                 <label> Choisir l'activite:</label>
                 <select name="idAct" required>
                     <option value="0">Sélectionner une activité</option>
+                    @foreach($mesActs as $uneAct)
+                        @if($uneAct->id_activite_compl == $idAct)
+                            <option value="{{ $uneAct->id_activite_compl }}" selected>{{ $uneAct->theme_activite }} {{ $uneAct->lieu_activite }} {{ $uneAct->motif_activite }} {{ $uneAct->date_activite }}</option>
+                        @endif
+                    @endforeach
                     @foreach($mesActs as $uneAct)
                         @php $afficher = 0;@endphp
                         @php $egal = 0;@endphp
@@ -30,7 +37,7 @@
                 </select>
                 <div class="spe">
                     <label> Spécialiste :</label>
-                    <input type="text" name="spe" required>
+                    <input type="text" name="spe" required value="{{$spe}}">
                 </div>
             </div>
             <br>

@@ -47,7 +47,7 @@
                     </div>
                     <div class="spe">
                         <label> Spécialité :</label>
-                        <select name="spe" required>
+                        <select name="spe" >
                             <option value="{{$prat[0]->id_specialite}}">{{$prat[0]->lib_specialite}}</option>
                             @foreach($mesSpe as $uneSpe)
                                 {{$spePrat=$prat[0]->lib_type_praticien}}
@@ -61,7 +61,7 @@
         </div>
     </div>
     <div class="cardForm formBtn">
-        <button class="btn" href="{{url('/listePraticiens')}}" class="annuler">Annuler</button>
+        <a class="btn" href="{{url('/listePraticiens')}}" class="annuler">Annuler</a>
         &nbsp
         <button class="btn" type="submit" class="valider">Valider</button>
     </div>

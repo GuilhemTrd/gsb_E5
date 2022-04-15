@@ -25,6 +25,7 @@
                     <th>Spécialiste</th>
                     <th>Date</th>
                     <th class="iAwesom"><i class="fa fa-times"></i></th>
+                    <th class="iAwesom"><i class="fa fa-pencil"></i></th>
                 </tr>
                 </thead>
                 @foreach($lesActsPrat as $cpt=>$unAct)
@@ -38,6 +39,9 @@
                             <td><a class="button greenBtn" type="button"
                                    href="{{url('/supprAct')}}/{{ $unAct->id_activite_compl }}/{{ $unAct->id_praticien }}"
                                    data-toggle="tooltip" title="Supprimer"><i class="fa fa-times"></i></a></td>
+                            <td><a class="button greenBtn" type="button"
+                                   href="{{url('/modifAct')}}/{{ $unAct->id_activite_compl }}/{{ $unAct->id_praticien }}/{{ $unAct->specialiste }}"
+                                   data-toggle="tooltip" title="Modifier"><i class="fa fa-pencil"></i></a></td>
                         </tr>
                     @endif
                 @endforeach
@@ -48,6 +52,9 @@
                 @endif
                 <br><br>
             </table>
+        </div>
+        <div class="cardForm formBtn">
+           <a class="btn" href="{{url('/listePraticiens')}}" class="annuler">Retour à la liste</a>
         </div>
     </div>
 @stop

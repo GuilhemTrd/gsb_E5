@@ -13,12 +13,11 @@ class ActiviteController
         try{
             $uneAct = new ServiceActivite();
             $mesActs = $uneAct->getAllActivite();
-            $uneActParPrat = new ServiceActivite();
-            $lesActsPrat = $uneActParPrat->getActsByID($id);
+            $lesActsPrat = $uneAct->getActsByID($id);
+            $nbAct = $uneAct->countActForID($id);
+            $unPrat = $uneAct->getActsByID($id);
             $unPrat = new ServicePraticien();
-            $unPrat = $unPrat->getPratByID($id);
-            $count = new ServiceActivite();
-            $nbAct = $count->countActForID($id);
+            $unPrat = $unPrat->getAllInfosPratID($id);
             return view('vues/infosActivites',compact('mesActs','lesActsPrat','unPrat','nbAct'));
         } catch (MonException $e){
             $monErreur = $e->getMessage();
@@ -33,11 +32,9 @@ class ActiviteController
         try{
             $uneActParPrat = new ServiceActivite();
             $lesActsPrat = $uneActParPrat->getActsByID($id);
-            $uneAct = new ServiceActivite();
-            $mesActs = $uneAct->getAllActivite();
-            $actAlready = new ServiceActivite();
+            $mesActs = $uneActParPrat->getAllActivite();
             $unPrat = new ServicePraticien();
-            $unPrat = $unPrat->getPratByID($id);
+            $unPrat = $unPrat->getAllInfosPratID($id);
             return view('vues/formAjoutAct',compact('mesActs','lesActsPrat','unPrat'));
         } catch (MonException $e){
             $monErreur = $e->getMessage();
@@ -53,17 +50,13 @@ class ActiviteController
             $idPrat = Request::input('idPrat');
             $idAct = Request::input('idAct');
             $spe = Request::input('spe');
-            $uneAct = new ServiceActivite();
-            $mesActs = $uneAct->getAllActivite();
-            $unAjout= new ServiceActivite();
+            $unAjout = new ServiceActivite();
+            $mesActs = $unAjout->getAllActivite();
             $monAjout = $unAjout->addActForPrat($idAct,$idPrat,$spe);
-            $uneActParPrat = new ServiceActivite();
-            $lesActsPrat = $uneActParPrat->getActsByID($idPrat);
+            $lesActsPrat = $unAjout->getActsByID($idPrat);
+            $nbAct = $unAjout->countActForID($idPrat);
             $unPrat = new ServicePraticien();
-            $unPrat = $unPrat->getPratByID($idPrat);
-            $count = new ServiceActivite();
-            $nbAct = $count->countActForID($idPrat);
-
+            $unPrat = $unPrat->getAllInfosPratID($idPrat);
             return view('vues/infosActivites',compact('mesActs','lesActsPrat','unPrat','nbAct'));
         } catch (MonException $e){
             $monErreur = $e->getMessage();
@@ -74,25 +67,63 @@ class ActiviteController
         }
     }
     public function supprActForPrat($idAct,$idPrat){
-    try{
-        $uneSuppr = new ServiceActivite();
-        $maSuppr = $uneSuppr->supprActPrat($idAct,$idPrat);
-        $uneAct = new ServiceActivite();
-        $mesActs = $uneAct->getAllActivite();
-        $uneActParPrat = new ServiceActivite();
-        $lesActsPrat = $uneActParPrat->getActsByID($idPrat);
-        $unPrat = new ServicePraticien();
-        $unPrat = $unPrat->getPratByID($idPrat);
-        $count = new ServiceActivite();
-        $nbAct = $count->countActForID($idPrat);
-
-        return view('vues/infosActivites',compact('mesActs','lesActsPrat','unPrat','nbAct'));
-    } catch (MonException $e){
-        $monErreur = $e->getMessage();
-        return view('vues/pageErreur', compact('monErreur'));
-    } catch (\Exception $ex){
-        $monErreur = $ex->getMessage();
-        return view('vues/pageErreur', compact('monErreur'));
+        try{
+            $uneSuppr = new ServiceActivite();
+            $maSuppr = $uneSuppr->supprActPrat($idAct,$idPrat);
+            $mesActs = $uneSuppr->getAllActivite();
+            $lesActsPrat = $uneSuppr->getActsByID($idPrat);
+            $nbAct = $uneSuppr->countActForID($idPrat);
+            $unPrat = new ServicePraticien();
+            $unPrat = $unPrat->getAllInfosPratID($idPrat);
+            return view('vues/infosActivites',compact('mesActs','lesActsPrat','unPrat','nbAct'));
+        } catch (MonException $e){
+            $monErreur = $e->getMessage();
+            return view('vues/pageErreur', compact('monErreur'));
+        } catch (\Exception $ex){
+            $monErreur = $ex->getMessage();
+            return view('vues/pageErreur', compact('monErreur'));
+        }
     }
-}
+
+    public function goModifActWInfos($idAct,$idPrat,$spe){
+        try{
+
+            $uneActParPrat = new ServiceActivite();
+            $lesActsPrat = $uneActParPrat->getActsByID($idPrat);
+            $mesActs = $uneActParPrat->getAllActivite();
+            $unPrat = new ServicePraticien();
+            $unPrat = $unPrat->getAllInfosPratID($idPrat);
+            return view('vues/formModifAct',compact('mesActs','idAct','idPrat','spe','lesActsPrat','unPrat'));
+        } catch (MonException $e){
+            $monErreur = $e->getMessage();
+            return view('vues/pageErreur', compact('monErreur'));
+        } catch (\Exception $ex){
+            $monErreur = $ex->getMessage();
+            return view('vues/pageErreur', compact('monErreur'));
+        }
+    }
+
+    public function modifActPourPrat(){
+        try{
+            $idPrat = Request::input('idPrat');
+            $idAct = Request::input('idAct');
+            $spe = Request::input('spe');
+            $oldIdPrat = Request::input('oldIdPrat');
+            $oldIdAct = Request::input('oldIdAct');
+            $uneSuppr = new ServiceActivite();
+            $maModif = $uneSuppr->modifAct($oldIdPrat,$oldIdAct,$idAct,$idPrat,$spe);
+            $mesActs = $uneSuppr->getAllActivite();
+            $lesActsPrat = $uneSuppr->getActsByID($idPrat);
+            $nbAct = $uneSuppr->countActForID($idPrat);
+            $unPrat = new ServicePraticien();
+            $unPrat = $unPrat->getAllInfosPratID($idPrat);
+            return view('vues/infosActivites',compact('mesActs','lesActsPrat','unPrat','nbAct'));
+        } catch (MonException $e){
+            $monErreur = $e->getMessage();
+            return view('vues/pageErreur', compact('monErreur'));
+        } catch (\Exception $ex){
+            $monErreur = $ex->getMessage();
+            return view('vues/pageErreur', compact('monErreur'));
+        }
+    }
 }

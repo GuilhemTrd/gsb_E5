@@ -239,21 +239,17 @@ a{
 }
 
 /*FORM PRAT GENE */
-.formPratLeft{
-    margin-right: 30px;
-}
-.formPratRight{
-    margin-left: 30px;
-}
 
 /*FORM AJOUT PRAT*/
-.formAjoutPratGene{
-    display: inline-flex;
-}
 .formAjoutPrat{
     width: 500px;
     height: 250px;
 }
+
+.formAjoutPrat input{
+    margin-top: 10px;
+}
+
 .formBtn{
     width: 1060px;
     margin-right: 0;
@@ -262,7 +258,7 @@ a{
 
 /*FORM MODIF PRAT*/
 .formModifPratGene{
-    display: inline-flex;
+    display: flex;
 }
 .formModifPrat{
     width: 500px;
