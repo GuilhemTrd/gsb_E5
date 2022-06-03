@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class ServiceActivite
 {
+    /* Récupère l'ensemble des activités*/
     public function getAllActivite(){
         try{
             $mesActs = DB::table('activite_compl')
@@ -17,6 +18,8 @@ class ServiceActivite
             throw new \Exception($e->getMessage(),5);
         }
     }
+
+    /* Récupère l'ensemble des activités d'un praticien*/
     public function getActsByID($id){
         try{
             $mesActs = DB::table('inviter')
@@ -30,6 +33,8 @@ class ServiceActivite
             throw new \Exception($e->getMessage(),5);
         }
     }
+
+    /* Compte le nombre d'activités d'un praticien*/
     public function countActForID($id){
         try{
             $mesActs = DB::table('inviter')
@@ -42,6 +47,7 @@ class ServiceActivite
         }
     }
 
+    /* Ajoute une activité à un informaticien */
     public function addActForPrat($idAct,$idPrat,$spe)
     {
         try {
@@ -54,6 +60,8 @@ class ServiceActivite
             throw new \Exception($e->getMessage(), 5);
         }
     }
+
+    /*Supprime l'activite d'un praticien*/
     public function supprActPrat($idAct,$idPrat)
     {
         try {
@@ -67,6 +75,7 @@ class ServiceActivite
         }
     }
 
+    /* Modifie l'activité d'un praticien */
     public function modifAct($oldIdAct,$oldIdPrat,$idAct,$idPrat,$spe)
     {
         try {

@@ -58,6 +58,7 @@ class PraticienController
         return view('home');
     }
 
+    /* Récupère tous les praticien avec l'ensembles des informations (Plusieurs lignes si plusieurs activites) */
     public function listePraticiens(){
         try{
             $unPrat = new ServicePraticien();
@@ -72,12 +73,13 @@ class PraticienController
         }
     }
 
+    /* Récupère l'ensemble des types et des spécialités*/
     public function listeTypes_et_Spe(){
         try{
             $unType = new ServicePraticien();
-            $mesTypes = $unType->getAllTypes();
-            $mesSpe = $unType->getAllSpe();
-            $count = $unType->countPratID();
+            $mesTypes = $unType->getAllTypes();     /* Récupère l'ensemble des types*/
+            $mesSpe = $unType->getAllSpe();    /* Récupère l'ensemble des spécialités*/
+            $count = $unType->countPratID();    /* Vérifie l'existence*/
             return view('vues/formAjoutPrat',compact('mesTypes','mesSpe','count'));
         } catch (MonException $e){
             $monErreur = $e->getMessage();
@@ -88,6 +90,7 @@ class PraticienController
         }
     }
 
+    /*Ajoute le praticien*/
     public function ajoutPrat(){
         try {
             $nom = Request::input('nom');
@@ -110,6 +113,8 @@ class PraticienController
             return view('vues/pageErreur',compact('monErreur'));
         }
     }
+
+    /*Modifie le praticien*/
     public function modifPrat(){
         try {
             $adresse = Request::input('adresse');
@@ -123,12 +128,12 @@ class PraticienController
             $uneModifPrat = new ServicePraticien();
             $uneModifPrat->modifPrat($idPrat,$adresse,$cp,$ville,$coef,$typePrat,$idSpe);
             if ($idSpe != null){
-                $modif = $uneModifPrat->getAllInfosPratID($idPrat);
-                if ($modif[0]->lib_specialite == null){
-                    $uneModifPrat->insertPossPrat($idPrat,$idSpe);
+                $modif = $uneModifPrat->getAllInfosPratID($idPrat);  /* Récupère un praticien avec l'ensemble des informations (Plusieurs lignes si plusieurs activites) */
+                if ($modif[0]->lib_specialite == null){              /*Si le praticien n'a pas de spécialité*/
+                    $uneModifPrat->insertPossPrat($idPrat,$idSpe);      /*Alors on insert la possesion de la spécialité*/
                 }
-                if ($modif[0]->lib_specialite != null){
-                    $uneModifPrat->modifPossPrat($idPrat,$idSpe);
+                if ($modif[0]->lib_specialite != null){              /*Si le praticien a une spécialité*/
+                    $uneModifPrat->modifPossPrat($idPrat,$idSpe);       /*Alors on modifie la possesion de la spécialité*/
                 }
             }
             return redirect('/listePraticiens');
@@ -141,10 +146,11 @@ class PraticienController
         }
     }
 
+    /*Supprime le praticien*/
     public function supprPrat($idPrat){
         try{
             $uneSuppr = new ServicePraticien();
-            $allInfos = $uneSuppr->getAllInfosPratID($idPrat);
+            $allInfos = $uneSuppr->getAllInfosPratID($idPrat);   /* Récupère un praticien avec l'ensemble de informations (Plusieurs lignes si plusieurs activites) */
             foreach ($allInfos as $unPrat){
                 $uneSpe = $unPrat->lib_specialite;
                 $uneAct = $unPrat->id_activite_compl;
@@ -153,17 +159,17 @@ class PraticienController
             }
             if($uneSpe != null)
             {
-                $supprimer = $uneSuppr->supprSpe($idPrat);
+                $supprimer = $uneSuppr->supprSpe($idPrat); /* Supprime la specialité si elle existe */
             }
             if($uneAct != null)
             {
-                $supprimer = $uneSuppr->supprAct($idPrat);
+                $supprimer = $uneSuppr->supprAct($idPrat);  /* Supprime le(s) activité(s) si elle(s) existe(nt) */
             }
             if($uneStat != null)
             {
-                $supprimer = $uneSuppr->supprStat($idPrat);
+                $supprimer = $uneSuppr->supprStat($idPrat); /* Supprime les stats si elles existent */
             }
-            $supprimer = $uneSuppr->supprPrat($idPrat);
+            $supprimer = $uneSuppr->supprPrat($idPrat);/* Supprime le praticien */
             return redirect('/listePraticiens');
         } catch (MonException $e){
             $monErreur = $e->getMessage();
@@ -178,7 +184,6 @@ class PraticienController
         try{
             $unPrat = new ServicePraticien();
             $prat = $unPrat->getAllInfosPratId($id);
-//            $count = $unPrat->countPratID();
             $mesTypes = $unPrat->getAllTypes();
             $mesSpe = $unPrat->getAllSpe();
             return view('vues/formModifPrat',compact('prat','mesTypes','mesSpe'));

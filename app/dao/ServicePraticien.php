@@ -46,33 +46,7 @@ class ServicePraticien
         Session::put('id',0);
     }
 
-    public function getAllPraticiens()
-    {
-        try {
-            $mesPrats = DB::table('praticien')
-                ->Select()
-                ->join('type_praticien', 'praticien.id_type_praticien', '=', 'type_praticien.id_type_praticien')
-                ->get();
-            return $mesPrats;
-        } catch (QueryException $e) {
-            throw new \Exception($e->getMessage(), 5);
-        }
-    }
-
-    public function getAllPraticiensSpecialite()
-    {
-        try {
-            $mesPrats = DB::table('posseder')
-                ->Select()
-                ->join('specialite', 'specialite.id_specialite', '=', 'posseder.id_specialite')
-                ->get();
-            return $mesPrats;
-        } catch (QueryException $e) {
-            throw new \Exception($e->getMessage(), 5);
-        }
-    }
-
-
+    /* Récupère un praticien avec l'ensemble des informations (Plusieurs lignes si plusieurs activites) */
     public function getAllInfosPratID($idPrat)
     {
         try {
@@ -104,6 +78,7 @@ class ServicePraticien
         }
     }
 
+    /* Récupère tous les praticien avec l'ensembles des informations (Plusieurs lignes si plusieurs activites) */
     public function getAllInfosPrat()
     {
         try {
@@ -136,6 +111,7 @@ class ServicePraticien
         }
     }
 
+    /* Récupère l'ensemble des spécialités*/
     public function getAllSpe()
     {
         try {
@@ -148,6 +124,7 @@ class ServicePraticien
         }
     }
 
+    /*Vérifie si le praticien existe*/
     public function countPratID()
     {
         try {
@@ -160,6 +137,7 @@ class ServicePraticien
         }
     }
 
+    /* Récupère l'ensemble des types*/
     public function getAllTypes()
     {
         try {
@@ -172,6 +150,7 @@ class ServicePraticien
         }
     }
 
+    /*Ajoute le praticien*/
     public function ajoutPrat($nom,$prenom,$adresse,$cp,$ville,$coef,$typePrat,$idSpe,$diplome)
     {
         try {
@@ -191,6 +170,7 @@ class ServicePraticien
         }
     }
 
+    /*Ajoute la spécialisation du praticien*/
     public function ajoutSpePrat($idPrat,$idSpe,$diplome)
     {
         try {
@@ -204,8 +184,7 @@ class ServicePraticien
         }
     }
 
-
-
+    /*Modifie le praticien*/
     public function modifPrat($idPrat,$adresse,$cp,$ville,$coef,$typePrat,$idSpe)
     {
         try {
@@ -224,6 +203,7 @@ class ServicePraticien
         }
     }
 
+    /*Ajout de la spécialité à un praticien*/
     public function insertPossPrat($idPrat,$idSpe)
     {
         try {
@@ -238,6 +218,7 @@ class ServicePraticien
         }
     }
 
+    /*Modification de la spécialité du praticien*/
     public function modifPossPrat($idPrat,$idSpe)
     {
         try {
@@ -252,6 +233,7 @@ class ServicePraticien
         }
     }
 
+    /* Supprime le(s) activité(s) */
     public function supprAct($idPrat)
     {
         try {
@@ -265,6 +247,7 @@ class ServicePraticien
         }
     }
 
+    /* Supprime la specialité */
     public function supprSpe($idPrat)
     {
         try {
@@ -278,6 +261,7 @@ class ServicePraticien
         }
     }
 
+    /* Supprime les stats */
     public function supprStat($idPrat)
     {
         try {
@@ -291,7 +275,7 @@ class ServicePraticien
         }
     }
 
-
+    /* Supprime le praticien */
     public function supprPrat($idPrat)
     {
         try {
